@@ -24,7 +24,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future<void> _showPickImageDialog() async {
     final ImagePicker _picker = ImagePicker();
     final List<Widget> actions = [];
-
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: const Text('Seleccionar imagen'),
+          children: actions,
+        );
+      },
+    );
     actions.add(
       ListTile(
         leading: const Icon(Icons.photo_camera),
@@ -62,16 +70,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
         },
       ),
     );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SimpleDialog(
-          title: Text('Seleccionar imagen'),
-          children: actions,
-        );
-      },
-    );
   }
 
   final spaceHorizontal = const SizedBox(
@@ -89,6 +87,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   );
   final txtPass = TextFormField(
     controller: _txtpassController,
+    obscureText: true,
     decoration: const InputDecoration(
         label: Text('Password User'), border: OutlineInputBorder()),
   );
@@ -108,7 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  bool validData() {
+  bool validateData() {
     bool valid = true;
     if (_nombreController.text == '' ||
         _txtemailController.text == '' ||
@@ -176,7 +175,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         padding: const EdgeInsets.symmetric(vertical: 15),
         child: ElevatedButton(
             onPressed: () {
-              if (validData()) Navigator.pushNamed(context, '/login');
+              if (validateData()) Navigator.pushNamed(context, '/dash');
             },
             child: const Text(
               'Sign Up',
